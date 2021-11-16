@@ -1,3 +1,5 @@
+// ДО на приблавние на отрезке + запрос на сумму на отрезке
+
 struct segment_tree {
 	int* tAdd; // push
 	int* t;
