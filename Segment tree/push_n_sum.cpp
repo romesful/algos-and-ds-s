@@ -1,11 +1,12 @@
 // ДО на прибавление на отрезке + запрос на сумму на отрезке
+typedef long long ll;
 
 struct segment_tree {
-	int* tAdd; // push
-	int* t;
+	ll* tAdd; // push
+	ll* t;
 	int n;
 	
-	int func(int left, int right)
+	ll func(ll left, ll right)
 	{
 		return left + right; // change if needed
 	}
@@ -13,8 +14,14 @@ struct segment_tree {
 	void build(int n)
 	{
 		this->n = n;
-		tAdd = new int[4 * n];
-		t = new int[4 * n];
+		tAdd = new ll[4 * n];
+		t = new ll[4 * n];
+
+		for (int i = 0; i < 4 * n; i++)
+		{
+			tAdd[i] = 0;
+			t[i] = 0;
+		}
 	}
 
 	void build(int v, int tl, int tr, vector<int>& a)
@@ -38,7 +45,7 @@ struct segment_tree {
 		build(0, 0, n - 1, a);
 	}
 
-	int query(int v, int tl, int tr, int l, int r)
+	ll query(int v, int tl, int tr, int l, int r)
 	{
 		int tm = (tl + tr) / 2;
 		if (r < tl || tr < l)
@@ -49,12 +56,12 @@ struct segment_tree {
 		return func(query(2 * v + 1, tl, tm, l, r), query(2 * v + 2, tm + 1, tr, l, r));
 	}
 
-	int query(int l, int r)
+	ll query(int l, int r)
 	{
 		return query(0, 0, n - 1, l, r);
 	}
 
-	void push_to_node_function(int v) // change if needed
+	void push_to_node_function(ll v) // change if needed
 	{
 		t[v] += tAdd[v];
 	}
@@ -74,11 +81,11 @@ struct segment_tree {
 		}
 	}
 
-	void modify(int v, int tl, int tr, int l, int r, int val)
+	void modify(int v, int tl, int tr, int l, int r, ll val)
 	{
 		if (l <= tl && tr <= r)
 		{
-			tAdd[v] += val;
+			tAdd[v] = val;
 			push(v, tl, tr);
 
 			return;
@@ -96,7 +103,7 @@ struct segment_tree {
 		t[v] = func(t[2 * v + 1], t[2 * v + 2]);
 	}
 
-	void modify(int l, int r, int val) // change if needed
+	void modify(int l, int r, ll val) // change if needed
 	{
 		modify(0, 0, n - 1, l, r, val);
 	}
