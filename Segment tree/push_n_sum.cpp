@@ -47,6 +47,7 @@ struct segment_tree {
 
 	ll query(int v, int tl, int tr, int l, int r)
 	{
+		push(v, tl, tr);
 		int tm = (tl + tr) / 2;
 		if (r < tl || tr < l)
 			return 0; // change if needed
