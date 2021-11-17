@@ -84,6 +84,8 @@ struct segment_tree {
 
 	void modify(int v, int tl, int tr, int l, int r, ll val)
 	{
+		push(v, tl, tr);
+		
 		if (l <= tl && tr <= r)
 		{
 			tAdd[v] = val;
@@ -94,8 +96,6 @@ struct segment_tree {
 
 		if (r < tl || l > tr)
 			return;
-
-		push(v, tl, tr);
 
 		int tm = (tl + tr) / 2;
 
